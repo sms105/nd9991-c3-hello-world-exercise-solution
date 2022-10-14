@@ -21,9 +21,7 @@ commands:
   destroy_environment:
     steps:
       - run:
-          name: Destroy environment
-          # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable 
-          # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
+          name: Destroy environment 
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
@@ -86,7 +84,7 @@ jobs:
   # Exercise: Config and Deployment
   configure_infrastructure: 
     docker:
-      - image: python:3.7-alpine3.11
+      - image: ubuntu-2004:2022.07.1
     steps:
       - checkout
       - add_ssh_keys:
@@ -95,11 +93,12 @@ jobs:
           name: Install dependencies
           command: |
             # install the dependencies needed for your playbook
-            apk add --update ansible 
+            sudo apt update -y
+            python3 -m pip install ansible
       - run:
           name: Configure server
           command: |
-            ansible-playbook -i inventory.txt main4.yml
+            /opt/circleci/.pyenv/versions/3.10.5/bin/ansible-playbook -i inventory.txt main4.yml
 
   # Exercise: Smoke Testing
   smoke_test:
@@ -147,7 +146,7 @@ jobs:
             aws cloudformation deploy \
             --template-file bucket.yml \
             --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
-            --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
+            --parameter-overrides MyBucketName="newsemooapiand"
       # Uncomment the step below if yoou wish to upload all contents of the current directory to the S3 bucket
       # - run: aws s3 sync . s3://mybucket-${CIRCLE_WORKFLOW_ID:0:7} --delete
   
@@ -202,7 +201,7 @@ jobs:
           # Similarly, you can create and use $OldStackID environment variable in place of production-distro 
           command: |
             export OldBucketID=$(cat ~/textfile.txt)
-            aws s3 rm "s3://${OldBucketID}" --recursive
+            aws s3 rm "s3://newsemooapiand" --recursive
           #  aws cloudformation delete-stack --stack-name production-distro 
           #  aws cloudformation delete-stack --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7}
           #  aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
