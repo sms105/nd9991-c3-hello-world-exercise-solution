@@ -97,6 +97,7 @@ jobs:
             sudo apt update -y
             sudo apt upgrade -y
             sudo apt install python3-pip -y
+            python3 -m pip install --upgrade pip
             python3 -m pip install setuptools_rust
             python3 -m pip install ansible
       - run:
