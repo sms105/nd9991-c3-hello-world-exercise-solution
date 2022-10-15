@@ -84,7 +84,7 @@ jobs:
   ## Exercise: Config and Deployment
   configure_infrastructure: 
     docker:
-      - image: cimg/base:2022.10
+      - image: cimg/node:13.8.0
     steps:
       - checkout
       - add_ssh_keys:
@@ -101,7 +101,7 @@ jobs:
       - run:
           name: Configure server
           command: |
-            sudo ansible-playbook -i inventory.txt main4.yml
+            ansible-playbook -i inventory.txt main4.yml
 
   # Exercise: Smoke Testing
   smoke_test:
