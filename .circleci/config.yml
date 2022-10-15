@@ -100,10 +100,10 @@ jobs:
             sudo apt upgrade -y
             sudo apt install python3-pip -y
             python3 -m pip install --upgrade pip
-            python3 -m pip install setuptools_rust
-            python3 -m pip install ansible
+            pip3 install ansible
       - run:
           name: Configure server
+          working_directory: ./
           command: |
             ansible-playbook -i inventory.txt main4.yml
 
