@@ -81,7 +81,7 @@ jobs:
       - destroy_environment
 
 
-  # Exercise: Config and Deployment
+  ## Exercise: Config and Deployment
   configure_infrastructure: 
     docker:
       - image: ubuntu-2004:2022.07.1
@@ -94,6 +94,7 @@ jobs:
           command: |
             # install the dependencies needed for your playbook
             sudo apt update -y
+            sudo apt upgrade -y
             python3 -m pip install ansible
       - run:
           name: Configure server
