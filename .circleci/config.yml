@@ -85,6 +85,7 @@ jobs:
   configure_infrastructure: 
     docker:
       - image: cimg/node:13.8.0
+    working_directory: .
     steps:
       - checkout
       - add_ssh_keys:
