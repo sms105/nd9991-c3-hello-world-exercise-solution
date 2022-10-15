@@ -220,7 +220,7 @@ jobs:
 
 workflows:
   # Name the workflow "welcome"
-  my_workflow:
+  default:
     # Run the welcome/run job in its own container
     jobs:
       # - welcome/run
