@@ -84,7 +84,7 @@ jobs:
   ## Exercise: Config and Deployment
   configure_infrastructure: 
     docker:
-      - image: cimg:alpine
+      - image: cimg/base:2022.10
     steps:
       - checkout
       - add_ssh_keys:
@@ -94,8 +94,8 @@ jobs:
           name: Install dependencies
           command: |
             # install the dependencies needed for your playbook
-            apt update -y
-            apt upgrade -y
+            sudo apt update -y
+            sudo apt upgrade -y
             python3 -m pip install ansible
       - run:
           name: Configure server
